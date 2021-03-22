@@ -1,4 +1,4 @@
-set VS_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community"
+set VS_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
 set QT_PATH=C:\Qt\5.15.2\msvc2019_64
 set SEVENZIP_PATH="C:\Program Files\7-Zip"
 
