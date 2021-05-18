@@ -32,7 +32,7 @@ rmdir /s /q %SOURCE_PATH%\gui_source\release
 cd build_libs
 %QT_PATH%\bin\qmake.exe build_libs.pro -r -spec win32-msvc "CONFIG+=release"
 
-nmake Makefile.Release clean
+nmake Makefile clean
 nmake
 del Makefile
 del Makefile.Release
@@ -42,6 +42,8 @@ cd ..
 
 cd gui_source
 %QT_PATH%\bin\qmake.exe gui_source.pro -r -spec win32-msvc "CONFIG+=release"
+%QT_PATH%\bin\lupdate.exe gui_source_tr.pro
+%QT_PATH%\bin\lrelease.exe gui_source_tr.pro
 
 nmake Makefile.Release clean
 nmake
@@ -83,28 +85,15 @@ copy %QT_PATH%\plugins\imageformats\qtiff.dll %SOURCE_PATH%\release\%BUILD_NAME%
 copy %QT_PATH%\plugins\imageformats\qico.dll %SOURCE_PATH%\release\%BUILD_NAME%\imageformats\
 copy %QT_PATH%\plugins\imageformats\qgif.dll %SOURCE_PATH%\release\%BUILD_NAME%\imageformats\
 
-copy %VS_PATH%\VC\Redist\MSVC\14.27.29016\x86\Microsoft.VC142.CRT\msvcp140.dll %SOURCE_PATH%\release\%BUILD_NAME%\
-copy %VS_PATH%\VC\Redist\MSVC\14.27.29016\x86\Microsoft.VC142.CRT\vcruntime140.dll %SOURCE_PATH%\release\%BUILD_NAME%\
-copy %VS_PATH%\VC\Redist\MSVC\14.27.29016\x86\Microsoft.VC142.CRT\msvcp140_1.dll %SOURCE_PATH%\release\%BUILD_NAME%\
+copy %VS_PATH%\VC\Redist\MSVC\%VCToolsVersion%\x86\Microsoft.VC142.CRT\msvcp140.dll %SOURCE_PATH%\release\%BUILD_NAME%\
+copy %VS_PATH%\VC\Redist\MSVC\%VCToolsVersion%\x86\Microsoft.VC142.CRT\vcruntime140.dll %SOURCE_PATH%\release\%BUILD_NAME%\
+copy %VS_PATH%\VC\Redist\MSVC\%VCToolsVersion%\x86\Microsoft.VC142.CRT\msvcp140_1.dll %SOURCE_PATH%\release\%BUILD_NAME%\
 
 xcopy %SOURCE_PATH%\XStyles\qss %SOURCE_PATH%\release\%BUILD_NAME%\qss /E /I
 xcopy %SOURCE_PATH%\Detect-It-Easy\db %SOURCE_PATH%\release\%BUILD_NAME%\db /E /I
 xcopy %SOURCE_PATH%\Detect-It-Easy\info %SOURCE_PATH%\release\%BUILD_NAME%\info /E /I
 
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_de.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_de.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_ja.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_ja.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_pl.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_pl.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_pt_BR.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_pt_BR.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_fr.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_fr.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_ru.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_ru.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_vi.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_vi.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_zh.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_zh.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_zh_TW.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_zh_TW.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_es.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_es.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_it.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_it.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_ko.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_ko.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_tr.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_tr.qm
-%QT_PATH%\bin\lrelease.exe %SOURCE_PATH%\gui_source\translation\die_he.ts -qm %SOURCE_PATH%\release\%BUILD_NAME%\lang\die_he.qm
+move %SOURCE_PATH%\gui_source\translation\*.qm  %SOURCE_PATH%\release\%BUILD_NAME%\lang\
 
 mkdir %SOURCE_PATH%\release\%BUILD_NAME%\signatures
 xcopy %SOURCE_PATH%\signatures\crypto.db %SOURCE_PATH%\release\%BUILD_NAME%\signatures\
